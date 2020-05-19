@@ -21,7 +21,7 @@ node *list = NULL;
 node *traversal = NULL;
 
 //function declaration
-bool search_sll(node *head, int number);
+bool search_sll(node *head, int *number);
 node insert_sll(node *head, int number);
 
 int main(void)
@@ -78,10 +78,17 @@ int main(void)
     list->next->next->next = n;
 
     //insert a new node
-    int y;
-    printf("Enter a new node: ");
-    scanf("%i", &y);
-    insert_sll(list, y);
+    int new_nodes_amount;
+    printf("How many new nodes do you want to enter ? ");
+    scanf("%i", &new_nodes_amount);
+
+    for (int i = 0; i < new_nodes_amount; i++)
+    {
+        int new_node;
+        printf("Enter a new node no.%i : ", i + 1);
+        scanf("%i", &new_node);
+        insert_sll(list, new_node);
+    }
 
     // DECLARATION set temp node to point where list node points;
     // CONDITION: continue until node temp doesnt hit NULL pointer;
@@ -92,14 +99,19 @@ int main(void)
     }
 
     //Search a number in SLL
-    int x;
-    printf("Enter the number you are searching for in a SLL: ");
-    scanf("%i", &x);
+    int *searched_number = malloc(sizeof(int));
+    if (searched_number == NULL)
+    {
+        return 1;
 
-    printf("Answer is [0 = True, 1 = False]: %i\n", search_sll(list, x));
+    }
+    printf("Enter the number you are searching for in a SLL: ");
+    scanf("%i", searched_number);
+
+    printf("Answer is [0 = True, 1 = False]: %i\n", search_sll(list, searched_number));
 
     //free used malloced dynamic memory
-    while(list != NULL)
+    while (list != NULL)
     {
         node *temp = list->next;
         free(list);
@@ -108,31 +120,43 @@ int main(void)
 }
 
 //Search function definition
-bool search_sll(node *head, int number)
+bool search_sll(node *head, int *searched_number)
 {
-    //asigning traversal point to the head of the sll; if traversal -> list -> next == number we search Hit !; Incerement a next next
-    for (traversal = list; traversal->number == number; traversal = traversal->next)
+    // boolean variable declaration
+    bool result_status;
+
+    node *travers = NULL;
+
+    for (travers = list; travers->number != *searched_number; travers = travers->next)
     {
-        //if traversal -> list -> next == NULL or end of the SLL, return false
-        if (traversal->next == NULL)
+        if (travers->number == *searched_number)
         {
-            return false;
+            result_status = true;
         }
-        return true;
+
+        else
+        {
+            result_status = false;
+        }
+
+        if (travers->next == NULL)
+        {
+            result_status = false;
+
+            return 1;
+        }
+
     }
-    return 0;
+
+    return result_status;
 }
 
 //Insert function definition SLL
 node insert_sll(node *head, int number)
 {
-    node *trav = malloc(sizeof(node));
-/*
-    if (n == NULL)
-    {
-        return 1;
-    }
-*/
+    node *trav = NULL;
+    trav = malloc(sizeof(node));
+
     trav->number = number;
     trav->next = list;
     list = trav;
