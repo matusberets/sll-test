@@ -26,57 +26,6 @@ node insert_sll(node *head, int number);
 
 int main(void)
 {
-    //assigning a dynamic memory to a new node n + error check
-    node *n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        return 1;
-    }
-
-    // assiging a value to a node member number
-    n->number = 2;
-    // assigning a new pointer to a node member next = NULL
-    n->next = NULL;
-
-    //now node member pointer list points towards node member n, now they are linked.
-    list = n;
-
-    //link a another number to existing linked list data structure
-    n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        return 1;
-    }
-
-    n->number = 4;
-    n->next = NULL;
-
-    list->next = n;
-
-    //add another number to list
-    n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        return 1;
-    }
-
-    n->number = 6;
-    n->next = NULL;
-
-    //connect new number to a linked list
-    list->next->next = n;
-
-    //add another number
-    n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        return 1;
-    }
-
-    n->number = 10;
-    n->next = NULL;
-    list->next->next->next = n;
-
     //insert a new node
     int new_nodes_amount;
     printf("How many new nodes do you want to enter ? ");
